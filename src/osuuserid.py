@@ -83,6 +83,9 @@ def osuScan(searchResults, browser):
             if isCorrectUser == 'y':
                 urlSlices = browser.current_url.split('/')
                 userID = urlSlices[len(urlSlices)-1]
+                browser.close()
+                browser.switch_to.window(
+                    browser.window_handles[len(browser.window_handles)-1])
                 return (userName, userID)
             elif isCorrectUser == 'n':
                 print("Okay, we'll look for another!")
