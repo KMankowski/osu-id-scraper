@@ -74,8 +74,16 @@ def osuScan(searchResults, browser):
             browser.switch_to.window(
                 browser.window_handles[len(browser.window_handles)-1])
             browser.get(urlString)
-            userName = browser.find_element_by_class_name(
-                'profile-info__name').find_element_by_tag_name('span').text
+            try:
+                userName = WebDriverWait(browser, 10).until(
+                    EC.presence_of_element_located(
+                        (By.CLASS_NAME, 'profile-info__name'))
+                ).find_element_by_tag_name('span').text
+            except:
+                print(
+                    'Driver could not find Google searchcontent in time (load speed took too long).')
+                browser.quit()
+                sys.exit()
             isCorrectUser = ''
             while isCorrectUser != 'y' and isCorrectUser != 'n':
                 isCorrectUser = input(
