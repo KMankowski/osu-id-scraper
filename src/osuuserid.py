@@ -69,7 +69,7 @@ def osuScan(searchResults, browser):
     for searchResult in searchResults:
         urlTag = searchResult.find_element_by_tag_name('a')
         urlString = urlTag.get_attribute('href')
-        if urlString.startswith('https://osu.ppy.sh/users/'):
+        if urlString.startswith('https://osu.ppy.sh/users/') or urlString.startswith('https://osu.ppy.sh/u/'):
             browser.execute_script("window.open('');")
             browser.switch_to.window(
                 browser.window_handles[len(browser.window_handles)-1])
