@@ -34,6 +34,7 @@ def main():
     sys.exit()
 
 
+# Returns a tuple of Strings.
 def getID(userName, browser):
     searchResults = googleSearch(userName, browser)
     osuUserAndID = osuScan(searchResults, browser)
