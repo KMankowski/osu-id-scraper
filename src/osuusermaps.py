@@ -1,5 +1,6 @@
 import osuuserid as idscraper
 import sys
+import time
 from selenium import webdriver
 
 # Setup browser.
@@ -17,16 +18,18 @@ if osuUserAndID == None:
 else:
     osuID = osuUserAndID[1]
 
-print(osuID)
-
-
-# Get the beatmap information of the user.
+# Get the beatmap information of the user. #
 browser.get('https://osu.ppy.sh/users/' + osuID)
-beatmaps = browser.find_element_by_css_selector("[data-page-id='beatmaps']")
+beatmaps = browser.find_elements_by_css_selector(
+    "[data-page-id='beatmaps']")[1]
 
-# Show all maps
-showMoreButtons = beatmaps.find_elements_by_class_name('show-more-link')
-print(len(showMoreButtons))
+# Show all maps. IF AN EXCEPTION IS THROWN, CHECK THAT SELENIUM (ie. '.click()') IS NOT OUTPACING 'time.sleep()'.
+showmoreButtons = beatmaps.find_elements_by_class_name('show-more-link')
+while len(showmoreButtons) > 0:
+    for showmoreButton in showmoreButtons:
+        showmoreButton.click()
+        time.sleep(.3)
+    showmoreButtons = beatmaps.find_elements_by_class_name('show-more-link')
 
 
 rankedAndApprovesMaps = ''
